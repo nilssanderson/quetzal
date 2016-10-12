@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using LitJson;
@@ -13,18 +12,16 @@ public class ItemDatabase : MonoBehaviour {
 
 	// Functions
 	void Start() {
-		itemData = JsonMapper.ToObject(File.ReadAllText(Application.dataPath + "/StreamingAssets/Items.json"));
-		ConstructItemDatabase();
-
-		Debug.Log(FetchItemByID(0).Description);
+		itemData = JsonMapper.ToObject(File.ReadAllText(Application.dataPath + "/StreamingAssets/Items.json")); // Convert Items.json contents to c# object
+		ConstructItemDatabase(); // Create database
 	}
 
 	// Return item by ID
 	public Item FetchItemByID(int _id) {
 		// Loop through each database item
 		for (int i = 0; i < database.Count; i++) {
-			if (database[i].ID == _id) {
-				return database[i];
+			if (database[i].ID == _id) { // If item id matches passed through _id
+				return database[i]; // Return matched item
 			}
 		}
 		return null;
@@ -65,6 +62,7 @@ public class Item {
 	public bool Stackable { get; set; }
 	public int Rarity { get; set; }
 	public string Slug { get; set; }
+	public Sprite Sprite { get; set; }
 
 
 	// Functions
@@ -79,6 +77,7 @@ public class Item {
 		this.Stackable = _stackable;
 		this.Rarity = _rarity;
 		this.Slug = _slug;
+		this.Sprite = Resources.Load<Sprite>("Sprites/Items/" + _slug);
 	}
 
 	// Empty Item
