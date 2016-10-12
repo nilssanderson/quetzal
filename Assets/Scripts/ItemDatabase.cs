@@ -5,12 +5,12 @@ using LitJson;
 
 public class ItemDatabase : MonoBehaviour {
 
-	// Variables
+	/* Variables ------------------------------------------------------------ */
 	private List<Item> database = new List<Item>();
 	private JsonData itemData;
 
 
-	// Functions
+	/* Functions ------------------------------------------------------------ */
 	void Start() {
 		itemData = JsonMapper.ToObject(File.ReadAllText(Application.dataPath + "/StreamingAssets/Items.json")); // Convert Items.json contents to c# object
 		ConstructItemDatabase(); // Create database

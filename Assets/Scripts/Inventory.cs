@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Inventory : MonoBehaviour {
 
-	// Variables
+	/* Variables ------------------------------------------------------------ */
 	GameObject inventoryPanel;
 	GameObject slotPanel;
 	ItemDatabase database;
@@ -17,7 +17,7 @@ public class Inventory : MonoBehaviour {
 	public List<GameObject> slots = new List<GameObject>();
 
 
-	// Functions
+	/* Functions ------------------------------------------------------------ */
 	void Start() {
 		database = GetComponent<ItemDatabase>();
 		inventoryPanel = GameObject.Find("Inventory Panel");
@@ -27,6 +27,7 @@ public class Inventory : MonoBehaviour {
 		for (int i = 0; i < slotAmount; i++) {
 			items.Add(new Item()); // Create empty item with id of -1
 			slots.Add(Instantiate(inventorySlot)); // Add slot to inventorySlot
+			slots[i].GetComponent<InventorySlot>().id = i; // Set slots id
 			slots[i].transform.SetParent(slotPanel.transform); // Set slots parent to slotPanel
 		}
 
@@ -55,6 +56,8 @@ public class Inventory : MonoBehaviour {
 				if (items[i].ID == -1) { // If item slot is empty
 					items[i] = itemToAdd; // Add item to the empty item slot
 					GameObject itemObject = Instantiate(inventoryItem); // Create item
+					itemObject.GetComponent<ItemData>().item = itemToAdd; // Set item to itemToAdd
+					itemObject.GetComponent<ItemData>().slot = i; // Set slot to inventory slot int
 					itemObject.transform.SetParent(slots[i].transform); // Set parent to the empty item parent slot
 					itemObject.GetComponent<Image>().sprite = itemToAdd.Sprite; // Add items sprite to the item
 					itemObject.transform.position = Vector2.zero; // Set position to 0,0 of item slot
